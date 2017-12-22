@@ -12,20 +12,18 @@
 /*============================================================================
   #General Variables
 ==============================================================================*/
-// ShowTime Colors
-$colorBody: #f3f6f6;
-$colorBorder: #efefef;
+$colorBody: {{ settings.shop_bg_color }};
+$colorBorder: {{ settings.border_color }};
 
 // Gift Card Colors
-$colorGiftText: #999; // note, this is always on a white background
-$colorGiftBorder: {{ settings.primary_color }};
+$colorGiftText: #666; // note, this is always on a white background
+$colorGiftBorder: #eee;
 
 // Sizes
-$gutter: 24px;
+$gutter: 30px;
 
 /*============================================================================
   #Sass Mixins
-    - Copied from timber.scss.liquid
 ==============================================================================*/
 .clearfix {
   &:after {
@@ -54,6 +52,10 @@ $gutter: 24px;
 /*============================================================================
   #Base Styles
 ==============================================================================*/
+header, nav, section, article, aside, footer {
+  display:block;
+}
+
 .template-giftcard,
 .template-giftcard body {
   background: $colorBody;
@@ -64,39 +66,24 @@ $gutter: 24px;
 }
 
 .template-giftcard .wrapper {
+  margin: 0 auto;
   max-width: 588px;
-  margin:0 auto;
 
   img, object, iframe {
     max-width: 100%;
   }
 }
 
-@media screen and (min-width: 480px) {
-  .template-giftcard .wrapper {
-    padding: 0 30px;
-  }
-}
-
-@media screen and (max-width: 479px) {
-  .template-giftcard .wrapper {
-    padding: 0 20px;
-  }
-  .giftcard__amount {
-    font-size: 1.3em !important;
-  }
-}
-
 .giftcard-header {
-  padding: ($gutter * 2) 0;
+  padding: ($gutter) 0;
   font-size: 1em;
+  text-align: center;
   -webkit-animation: fadein 0.5s ease-in-out both 0.4s;
   animation: fadein 0.5s ease-in-out both 0.4s;
 }
 
 .shop-url {
   display: none;
-  text-align: center;
 }
 
 .giftcard {
@@ -130,9 +117,8 @@ $gutter: 24px;
 }
 
 .giftcard__title {
-  float: left;
+  text-align: center;
   margin-bottom: 0;
-  font-size:20px;
 }
 
 .giftcard__tag {
@@ -329,9 +315,6 @@ $gutter: 24px;
   text-align: center;
   overflow: hidden;
 }
-.giftcard__actions .btn_c {
-  margin-top:0;
-}
 
 .action-link {
   position: absolute;
@@ -381,20 +364,14 @@ $gutter: 24px;
   animation: fadein 0.5s ease-in-out both 0.4s
 }
 
-
-.giftcard__icon {
-  width: 45px;
-  display: inline-block;
-  vertical-align: baseline;
+#QrCode {
+  img {
+    padding: $gutter;
+    border: 1px solid $colorBorder;
+    border-radius: 4px;
+    margin: 0 auto $gutter;
+  }
 }
-
-#qr-code img {
-padding: .75em;
-border: 1px solid #e5e5e5;
-border-radius: 6px;
-margin: 0 auto 1.5em;
-}
-
 
 
 /*============================================================================
@@ -409,10 +386,6 @@ margin: 0 auto 1.5em;
 
   .giftcard-header {
     padding: $gutter 0;
-  }
-
-  .header-logo {
-    font-size: 2em;
   }
 
   .giftcard__border {
@@ -488,6 +461,10 @@ margin: 0 auto 1.5em;
     background-color: #fff;
   }
 
+  .giftcard-header {
+    padding: 10px 0;
+  }
+
   .giftcard__content,
   .giftcard__border {
     border: 0 none;
@@ -496,8 +473,14 @@ margin: 0 auto 1.5em;
   .giftcard__actions,
   .giftcard__wrap:before,
   .giftcard__wrap:after,
-  .tooltip {
+  .tooltip,
+  .add-to-apple-wallet {
     display: none;
+  }
+
+  .giftcard__title {
+    float: none;
+    text-align: center;
   }
 
   .giftcard__code__text {

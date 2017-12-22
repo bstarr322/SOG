@@ -1,58 +1,50 @@
-
-{% comment %}
-By default, we will select the products based on the brand ( vendor )
-{% endcomment %}
-
-{% assign number_of_related_products_to_show = 12 %}
-
-{% assign number_of_related_products_to_fetch = number_of_related_products_to_show | plus: 1 %}
-
-{% assign exclusions = 'frontpage,all' | split: ',' %}
-{% assign found_a_collection = false %}
-
-
-{% assign current_vendor = product.vendor | handleize %}
-{% assign collection = collections[current_vendor] %}
-{% capture index %}{{ 'now' | date: '%S' | times: collection.products.size | divided_by: 60 }}{% endcapture %}
-
-
 {% if collection and collection.all_products_count > 1 %}
-  {% unless exclusions contains collection.handle %}
-    {% assign found_a_collection = true %}
-  {% endunless %}
+  {% assign col = collection.handle %}
+{% else %}
+  {% assign col = product.collections.last.handle %}
 {% endif %}
 
-{% unless found_a_collection %}
-  {% for c in product.collections %}
-    {% unless exclusions contains c.handle or c.all_products_count < 2 %}
-      {% assign found_a_collection = true %}
-      {% assign collection = c %}
-      {% break %}
-    {% endunless %}
-  {% endfor %}
-{% endunless %}
+{% for tag in product.tags %}
+  {% if tag contains 'meta-related-collection-' %}
+    {% assign related_collection_handle = tag | remove: 'meta-related-collection-' %}
+    {% if collections[related_collection_handle].all_products_count > 0 %}
+      {% assign col = related_collection_handle %}
+      {% assign collection = collections[col] %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
 
-{% if collection and collection.products_count > 1 %}
-<div class="h_row_4 animated  fadeInUp" data-animation="fadeInUp">
-  <div class="clearfix">
-    <h3>{{ 'products.general.related_products' | t }}</h3>
-    {% assign current_product = product %}
-    {% assign current_product_found = false %}
-  </div>
-  <div class="carosel product_c">
-    <div class="row"> 
-      <div id="featured-products" class="owl-carousel">
-        {% for product in collection.products limit: number_of_related_products_to_fetch offset: index %}
-          {% if product.handle == current_product.handle %}
-            {% assign current_product_found = true %}
-          {% else %}
-            {% unless current_product_found == false and forloop.last %}
-              {% include 'product-loop' %}
-            {% endunless %}
-          {% endif %}
-        {% endfor %}
+{% if col %}
+  {% if collections[col].all_products_count != 1 or collections[col].products.first.id != product.id %}
+    {% assign skip_product = product %}
+    {% assign products = collections[col].products %}
+    {% unless sidebar %} <div class="container"> {% endunless %}
+      <div class="related-products__title {% unless section.settings.related_products_style == 'slider' %}{% if sidebar %}twelve columns{% else %}sixteen columns{% endif %}{% endunless %}">
+        <h4 class="title center">{{ 'products.product.related_items' | t }}</h4>
+        <div class="feature_divider"></div>
       </div>
-    </div>
-  </div>
-</div>
+      <div class="clear"></div>
+    {% unless sidebar %} </div> {% endunless %}
+
+    {% if section.settings.related_products_style == 'slider' %}
+      {% assign limit = section.settings.related_products_limit %}
+      <div class="related-products related-products--slider js-related-products-slider">
+        {% if col and collections[col].all_products_count > 0 %}
+          {% include 'product-slider', related_products: true %}
+        {% endif %}
+      </div>
+
+    {% else %}
+      {% assign limit = section.settings.related_products_limit | plus: 1 %}
+      {% assign products_per_row = section.settings.products_per %}
+      {% if col and collections[col].all_products_count > 0 %}
+        {% unless sidebar %}<div class="container related-products--grid">{% endunless %}
+          <div class="{% if sidebar %}twelve{% else %}sixteen{% endif %} columns">
+            {% include 'product-loop', related_products: true %}
+          </div>
+        {% unless sidebar %}</div>{% endunless %}
+      {% endif %}
+    {% endif %}
+
+  {% endif %}
 {% endif %}

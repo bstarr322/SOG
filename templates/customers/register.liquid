@@ -1,44 +1,54 @@
-<div id="content">
-  <div class="container">
-    {% include 'breadcrumb' %}
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="title clearfix">
-          <h1>{{ 'customer.register.title' | t }}</h1>
-        </div>
-      </div>
-    </div>
-    <div class="row mt20">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="sfbox box-registration">
-          {% form 'create_customer' %}
+<a name="pagecontent" id="pagecontent"></a>
 
-          {% include 'form-errors-custom' %}
+<div class="sixteen columns clearfix collection_nav">
+  <h1>{{ 'customer.register.title' | t }}</h1>
+  <div class="feature_divider"></div>
+</div>
 
-          <div class="frm">
-            <label for="first_name" class="lbltxt">{{ 'customer.register.first_name' | t }}</label>
-            <input type="text" value="" name="customer[first_name]" id="first_name" class="txtbox" {% if form.errors contains "first_name" %} class="error"{% endif %} autocapitalize="words" autofocus>
-          </div>
-          <div class="frm">
-            <label for="last_name" class="lbltxt">{{ 'customer.register.last_name' | t }}</label>
-            <input type="text" value="" name="customer[last_name]" id="last_name" class="txtbox" {% if form.errors contains "last_name" %} class="error"{% endif %} autocapitalize="words">
-          </div>  
-          <div class="frm">
-            <label for="email" class="lbltxt">{{ 'customer.register.email' | t }}</label>
-            <input type="email" value="" name="customer[email]" id="email" class="txtbox" {% if form.errors contains "email" %} class="error"{% endif %}>
-          </div>
-          <div class="frm">
-            <label for="password" class="lbltxt">{{ 'customer.register.password' | t }}</label>
-            <input type="password" value="" name="customer[password]" id="create_password" class="txtbox" {% if form.errors contains "password" %} class="error"{% endif %}>
+<div class="section clearfix">
+  <div class="six columns offset-by-five">
+    <br class="clear" />
+    <div id="customer">
+      <!-- Create Customer -->
+      <div id="create-customer">
+
+        {% form 'create_customer' %}
+          {{ form.errors | default_errors }}
+
+          <div id="first_name" class="clearfix large_form">
+            <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
+            <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
           </div>
 
-          <div class="row">
-            <div class="col-sm-4 col-ms-6"><p><input type="submit" class="btn_c" value="{{ 'customer.register.submit' | t }}"></p></div>
-            <div class="col-sm-8 col-ms-6 text-right sign-in">{{ 'customer.register.returning' | t }} <a href="/account/login">{{ 'customer.register.sign_in_html' | t }}</a></div>
+          <div id="last_name" class="clearfix large_form">
+            <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+            <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
           </div>
-          {% endform %}
-        </div>
-      </div>
+
+          <div id="email" class="clearfix large_form">
+            <label for="email" class="login">{{ 'customer.register.email' | t }}</label>
+            <input type="email" value="" name="customer[email]" id="email" class="large" size="30" />
+          </div>
+
+          <div id="password" class="clearfix large_form">
+            <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
+            <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
+          </div>
+
+          <div class="acceptsMarketing">
+            <input type="checkbox" id="customer[accepts_marketing]" name="customer[accepts_marketing]">
+            <label for="customer[accepts_marketing]">{{ 'customer.register.accepts_marketing' | t }}</label>
+          </div>
+
+          <div class="action_bottom">
+            <input class="btn action_button" type="submit" value="{{ 'customer.register.sign_up' | t }}" />
+            <p class="right" style="padding-top: 8px;">
+              {{ 'customer.register.returning_customer_label' | t }} {{ 'customer.register.sign_in_html' | t | customer_login_link }}
+            </p>
+          </div>
+
+        {% endform %}
+      </div><!-- /#create-customer -->
     </div>
   </div>
 </div>
