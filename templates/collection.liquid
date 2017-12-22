@@ -1,0 +1,108 @@
+{% assign variant_option = 'style' %}
+{% assign to_trim = variant_option | append: '-' %}
+{% assign image_size = 'medium' %}
+{% assign image_size_retina = 'large' %}
+{% assign variant_image = product.featured_image | product_img_url: image_size %}
+{% assign variant_image_retina = product.featured_image | product_img_url: image_size_retina %}
+{% assign product_image = variant_image %}
+{% assign variant_id = empty %}
+{% for option in product.options %}
+  {% assign downcased_option = option | downcase %}
+  {% if downcased_option contains variant_option %}
+    {% assign option_index = forloop.index0 %}
+    {% assign values = '' %}
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        {% assign value = variant.options[option_index] %}
+        {% assign selected_tag = value | handle %}
+        {% assign all_selected = current_tags | join: '||' | append: '||' | append: collection.handle %}
+        {% assign all_selected_list = all_selected | split: '||' %}
+        {% for tag in all_selected_list %}
+          {% if tag.size > 0 %}         
+            {% assign tag_trimmed = tag | replace: to_trim, '' %}
+            {% if selected_tag contains tag_trimmed or tag_trimmed contains selected_tag %}          
+              {% assign new_variant_image = variant.featured_image | product_img_url: image_size %}
+              {% if variant.featured_image and new_variant_image != product_image %}
+                  {% assign variant_image = new_variant_image %}
+                  {% assign variant_image_retina = variant.featured_image | product_img_url: image_size_retina %}
+                  {% assign variant_id = variant.id %}
+              {% endif %}    
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+{% paginate collection.products by settings.pagination_limit %}
+
+{% if settings.product_grid_layout == '4-col' %}
+{% assign grid_item_width = '3' %}
+{% elsif settings.product_grid_layout == '3-col' %}
+{% assign grid_item_width = '4' %}
+{% else %}
+{% assign grid_item_width = '6' %}
+{% endif %}
+
+{% assign on_sale = false %}
+{% if product.available and product.compare_at_price > product.price %}
+{% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available  %}
+{% assign sold_out = false %}
+{% endif %}
+
+<div id="content">
+  <div class="container">
+    {% include 'breadcrumb' %}
+    <div class="catalog_c">
+      <div class="title clearfix">
+        <h1>{{ collection.title }}</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-md-9 col-md-push-3 col-sm-8 col-sm-push-4">
+          <div class="product_c">
+            <div class="filter_c">
+              {% include 'collection-views' %}
+              {% include 'collection-sorting' %}
+            </div>
+            {% if collection.image or collection.description.size > 0 %}
+            <div class="box collection-box animated rollIn" data-animation="rollIn" >
+              {% if collection.image %}
+              <img src="{{ collection | img_url: 'master' }}" alt="{{ collection.title }}" />
+              {% endif %}
+            </div>
+            {% endif %}
+            <div class="row view-grid animated  fadeInUp" data-animation="fadeInUp">
+              {% for product in collection.products %}
+              <div class="col-md-{{ grid_item_width }} col-xs-6 element mb30">
+                {% include 'product-loop' %}
+              </div>
+              {% else %}
+              <p class="no-products">{{ 'collections.general.no_matches' | t }}</p>
+              {% endfor %}
+            </div>
+            {% if paginate.pages > 1 %}
+            {% include 'pagination-custom' %}
+            {% endif %}
+
+          </div>
+          {% if collection.description.size > 0 %}
+          <div class="rte">
+            <h3 class="product_c_title">About {{ collection.title }}</h3>
+            {{ collection.description }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-md-3 col-md-pull-9 col-sm-4 col-sm-pull-8">
+        {% include 'sidebar-collection' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endpaginate %}

@@ -1,0 +1,21 @@
+
+
+<div class="h_row_4 animated  fadeInUp" data-animation="fadeInUp">
+  <div class="clearfix">
+    <h3>{{ 'products.general.related_products' | t }}</h3>
+    {% assign current_product = product %}
+    {% assign current_product_found = false %}
+  </div>
+      <div id="featured-products" class="related-products carosel product_c" data-relatable="product.products" data-relatable-id="{{ product.id }}">
+  
+            {% raw %}
+              {{#products}}
+                <a href="/products/{{handle}}">
+                  <img src="{{#img_url.medium}}{{image.src}}{{/img_url.medium}}" alt="">
+                  <div>{{title}}</div>
+                  <p>${{variants.0.price}}</p>
+                </a>
+              {{/products}}
+            {% endraw %}
+          </div> 
+</div>

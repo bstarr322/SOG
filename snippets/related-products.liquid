@@ -1,0 +1,58 @@
+
+{% comment %}
+By default, we will select the products based on the brand ( vendor )
+{% endcomment %}
+
+{% assign number_of_related_products_to_show = 12 %}
+
+{% assign number_of_related_products_to_fetch = number_of_related_products_to_show | plus: 1 %}
+
+{% assign exclusions = 'frontpage,all' | split: ',' %}
+{% assign found_a_collection = false %}
+
+
+{% assign current_vendor = product.vendor | handleize %}
+{% assign collection = collections[current_vendor] %}
+{% capture index %}{{ 'now' | date: '%S' | times: collection.products.size | divided_by: 60 }}{% endcapture %}
+
+
+{% if collection and collection.all_products_count > 1 %}
+  {% unless exclusions contains collection.handle %}
+    {% assign found_a_collection = true %}
+  {% endunless %}
+{% endif %}
+
+{% unless found_a_collection %}
+  {% for c in product.collections %}
+    {% unless exclusions contains c.handle or c.all_products_count < 2 %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+      {% break %}
+    {% endunless %}
+  {% endfor %}
+{% endunless %}
+
+{% if collection and collection.products_count > 1 %}
+<div class="h_row_4 animated  fadeInUp" data-animation="fadeInUp">
+  <div class="clearfix">
+    <h3>{{ 'products.general.related_products' | t }}</h3>
+    {% assign current_product = product %}
+    {% assign current_product_found = false %}
+  </div>
+  <div class="carosel product_c">
+    <div class="row"> 
+      <div id="featured-products" class="owl-carousel">
+        {% for product in collection.products limit: number_of_related_products_to_fetch offset: index %}
+          {% if product.handle == current_product.handle %}
+            {% assign current_product_found = true %}
+          {% else %}
+            {% unless current_product_found == false and forloop.last %}
+              {% include 'product-loop' %}
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

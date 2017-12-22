@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en" class="noIE">
+<head>
+  <meta name="google-site-verification" content="e1UQ_n1eJpS8EMLgK4wWHAI2khKhnYwOI1XLm0yDEJ4" />
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title and description ================================================== -->
+  <title>
+  {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <!-- Helpers ================================================== -->
+  {% include 'social-meta-tags' %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="theme-color" content="{{ settings.primary_color }}">
+
+  {% if settings.favicon != empty %}
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+  {% endif %}
+  {{ 'apps.css' | asset_url | stylesheet_tag }}
+  {{ 'style.css' | asset_url | stylesheet_tag }}
+  {{ 'nav.scss.css' | asset_url | stylesheet_tag }}
+
+  {% comment %}
+    NEW STYLESHEET!!!
+    PLEASE PORT EVERYTHING HERE WHEN WE HAVE THE TIME
+  {% endcomment %}
+  {{ 'style-new.scss.css' | asset_url | stylesheet_tag }}
+
+  {% if settings.header_font contains 'Google' %}
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.header_font | remove: 'Google+' }}:300,400,700,900">
+  {% endif %}
+  {% if settings.base_font contains 'Google' and settings.base_font != settings.header_font %}
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.base_font | remove: 'Google+' }}:300,400,700,900">
+  {% endif %}
+
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+
+  <!--[if lt IE 9]>
+  {{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}
+  <![endif]-->
+
+  {% if template contains 'customers' %}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {{ 'jquery.js' | asset_url | script_tag }}
+  {% if template == 'index' or template contains 'product' or template contains 'collection' or template contains 'search' %}
+  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+
+
+  <!-- Theme Global App JS ================================================== -->
+  <script>
+    var app = app || {
+      data:{
+          template:{{ template | json }},
+          money_format: {{ shop.money_format | default:false | json }}
+      }
+    }
+  </script>
+      <!-- Begin Relatable -->
+<style>*[data-relatable]{visibility:hidden;}*[data-relatable].rendered{visibility:visible;}</style>
+<script>
+  var Relatable={base_url:"https://relatable.heliumdev.com/resources/af45add7a2d14a68b26122445a19d067",
+  callbacks:[],ready:function(callback){if(this.loaded){callback();}else{this.callbacks.push(callback);}}};
+</script>
+<script src="//cdn-relatable.heliumdev.com/js/1.0/relatable.js" async></script>
+<!-- End Relatable -->
+
+<script src="//load.sumome.com/" data-sumo-site-id="25ada13b08f97928a9b78c5b91d785ab4b6ad2502f648602efc98d756a76bc7b" async="async"></script>
+<meta name="google-site-verification" content="GccrOPNrFrZVQVuQTG9YN3aA0Yj4kxC89Ky28GOtn3U" />
+
+
+ <!--Start of Yotpo Script-->
+      <script type="text/javascript">
+(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/56NuY58oyXVeRkHbgfHJewxicjRxyOjeesNM85ye/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+</script>
+ <!--End of Yotpo Script-->
+
+{% include 'sca.freegifts' %}
+
+
+
+<!-- BeginConsistentCartAddon --><script>{% if customer %}Shopify.merge_cart_text = '{{ "consistent_cart_addon.merge_cart_text" | t }}' ;Shopify.customer_logged_in = true ;Shopify.customer_email = "{{ customer.email }}" ;Shopify.log_uuids = true;{% else %}Shopify.customer_logged_in = false ;Shopify.customer_email = "" ;Shopify.log_uuids = true;{% endif %}</script><!-- EndConsistentCartAddon -->
+</head>
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} has-alert" >
+
+  {% if settings.show_entry_popup %}
+  {% include 'entry-popup' %}
+  {% endif %}
+
+  <div id="notice" class="alert alert-default alert-fixed alert-dismissible" role="alert">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <a href="#" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+          <strong>Free Shipping + Free Returns</strong>
+          &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+          All Day. Everyday.
+          &nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $('#notice').on('closed.bs.alert', function(){
+      $('body').removeClass('has-alert');
+    });
+  </script>
+
+  <div id="header">
+    {% if settings.header_style == 'header2' %}
+      {% include 'header-top-logo' %}
+    {% else %}
+      {% include 'header-top' %}
+    {% endif %}
+
+    <div class="header_bot">
+      <div class="container">
+
+        {% if settings.navigation_type == 'simple' %}
+        {% include 'main-menu-simple' %}
+        {% else %}
+        {% include 'main-menu' %}
+        {% endif %}
+
+      </div>
+    </div>
+  </div><!-- /header -->
+
+  {{ content_for_layout }}
+
+  {% if settings.use_instagram_widget %}
+  <!-- Instagram Feeds -->
+    <div data-is data-is-source="@sonsofgotham" data-is-columns="6" data-is-rows="1" data-is-scrollbar="false" data-is-speed="5000" data-is-auto="3000"></div>
+  {% endif %}
+  
+  {% include 'footer' %}
+
+  {{ 'jquery.magnific-popup.min.js' | asset_url | script_tag }}
+
+
+    {% if settings.cart_type == 'modal' %}
+      {{ 'api.jquery.js' | asset_url | script_tag }}
+      {{ 'ajaxify-shop.js' | asset_url | script_tag }}
+    {% endif %}
+
+
+  {% if template contains 'blog' and settings.blog_layout != 'full' %}
+    {{ "masonry.pkgd.min.js" | asset_url  | script_tag }}
+    {{ "imagesloaded.pkgd.min.js" | asset_url  | script_tag }}
+  {% endif %}
+
+  {% if settings.show_multiple_currencies %}
+    {% include 'currencies' %}
+  {% endif %}
+
+  {% if template == 'index' %}
+    {% if settings.featured_collection != blank and collections[settings.featured_collection].handle == settings.featured_collection and collections[settings.featured_collection].products_count > 0 %}
+        {{ 'jquery.owl.min.js' | asset_url | script_tag }}
+    {% endif %}
+  {% elsif template contains 'product' %}
+    {{ 'jquery.owl.min.js' | asset_url | script_tag }}
+  {% endif %}
+
+  {{ 'scripts.js' | asset_url | script_tag }}
+  {% include 'findify-tagging' %}
+
+  {% include 'size-charts' %}
+  {% include 'free-shipping' %}
+
+  {% comment %}
+    NOTE: The line below is used by S Loyalty (www.sloyalty.com) to power your loyalty program
+    on your storefront for this theme. DO NOT edit or delete this line as it would lead to
+    service interruptions. If you have any inquiries, please contact us at support@sloyalty.com.
+  {% endcomment %}
+  {% include "sloyalty-statusbar" %}
+
+  {% if template contains 'product' %}
+  <script>
+    Shopify.Products.recordRecentlyViewed();
+  </script>
+  {% endif %}
+  
+  <!-- BEGIN: Google Trusted Stores -->
+  <script type="text/javascript">
+      var gts = gts || [];
+
+      gts.push(["id", "483106"]);
+      gts.push(["badge_position", "USER_DEFINED"]);
+      gts.push(["badge_container", "gts-container"]);
+      gts.push(["locale", "en_US"]);
+
+      {% if template == "product" %}
+      gts.push(["google_base_offer_id", "{{ product.selected_or_first_available_variant.sku }}"]);
+      {% endif %}
+
+      gts.push(["google_base_subaccount_id", "8577606"]);
+
+      (function() {
+          var gts = document.createElement("script");
+          gts.type = "text/javascript";
+          gts.async = true;
+          gts.src = "https://www.googlecommerce.com/trustedstores/api/js";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(gts, s);
+      })();
+  </script>
+  <!-- END: Google Trusted Stores -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>​
+</body>
+</html>

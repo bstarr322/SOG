@@ -1,0 +1,62 @@
+<div id="CartContainer" class="menu_c cart_menu">
+  <div class="menu_title ajax_cart_header clearfix">
+    <div class="table-cell drawer__header__left">
+      <span class="drawer__close js-drawer-close">
+        <img src="{{'close-cart.svg' | asset_url}}">
+      </span>
+    </div>
+    <h3 class="ajax_cart_title">{{ 'cart.general.title' | t }}</h3>
+  </div>
+  <form action="/cart" method="post" novalidate>
+  {% if cart.item_count > 0 %}
+  <div class="cart_row">
+    {% for item in cart.items %}
+    <ul>
+      <li>
+        <div class="pro_img">
+          <a href="{{ item.product.url }}">  
+            <img src="{{ item.product.featured_image.src | product_img_url: 'small' }}" alt="{{ item.title | escape }}" />
+          </a>
+        </div>
+      </li>
+      <li>
+        <h5><a href="{{ item.product.url | within: collections.all }}" class="item-name">{{ item.title }}</a></h5>
+        <p>{{ item.product.type }}</p>
+      </li>
+      <li>
+        <div class="price pull-right">{{ item.price | money }}</div>
+      </li>
+    </ul>
+    {% endfor %}
+  </div>
+  <div class="checkout_row ajaxcart__footer clearfix">
+    <div class="ajaxcart__total__price">
+      <p class="text-right"><strong>{{ cart.total_price | money }}</strong></p>
+    </div>
+    <button type="submit" name="checkout" value="{{ 'cart.general.checkout' | t }}" class="btn_c">
+      <div class="cart-icon-container"></div>
+      {{ 'cart.general.checkout' | t }}</button>
+  </div>
+  {% else %}
+  <div class="cart_row">
+    <div class="empty-cart">{{ 'cart.general.empty' | t }}</div>
+  </div>
+  {% endif %}
+  <div class="checkout_row ajaxcart__footer clearfix" style="{% if cart.item_count == 0 %}display: none;{% endif %}">
+    <div class="ajaxcart__total__price">
+      <p class="text-right">
+        <strong>{{ cart.total_price | money }}</strong>
+      </p>
+    </div>
+    <button type="submit" name="checkout" value="{{ 'cart.general.checkout' | t }}" class="btn_c">
+    	<div class="cart-icon-container"></div>
+    	{{ 'cart.general.checkout' | t }}
+    </button>
+  </div>
+  </form>
+  <div class="cart_drawer__footer" style="{% if cart.item_count > 0 %}display: none;{% endif %}">
+    <a href="https://www.sonsofgotham.com/collections" class="drawer__cart__btn">
+      <span>Shop Now</span>
+    </a>
+  </div>
+</div>

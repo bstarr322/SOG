@@ -1,0 +1,13 @@
+<div id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+<pre>
+"Title","URL"
+{% for c in collections %}"{{ c.title }}","{{ c.url }}"
+{% endfor %}
+</pre>
+      </div>
+    </div>
+  </div>
+</div>

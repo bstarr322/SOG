@@ -1,0 +1,45 @@
+{% if settings.use_slider %}
+{% include 'home-slider' %}
+{% endif %}
+
+<div id="content">
+  <div class="container">
+
+    {% unless settings.featured_images_content == 'none' %}
+    {% include 'home-ads' %}
+    {% endunless %}
+
+    {% if settings.use_home_cta %}
+    {% include 'home-cta' %}
+    {% endif %}
+
+    {% if settings.use_page_content %}
+        <div class="rte">
+        {% if page_title != blank %}
+          {{ pages[settings.page_title].content }}
+        {% else %}
+          <p>{{ 'home_page.sections.no_page' | t }}</p>
+        {% endif %}
+        </div>
+    {% endif %}
+
+    {% if settings.use_featured_products %}
+      {% include 'home-featured-products' %}
+    {% endif %}
+
+  </div>
+</div>
+
+
+{% comment %}
+<div class="ma-footer-static-container">
+  <div class="footer-static">
+    <div class="container">
+      <div class="row-fluid">
+{% endcomment %}
+
+      <div class="marketing-video">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe src="https://www.youtube.com/embed/8djTbnGP6tQ?showinfo=0&autohide=1&VQ=HD720" type="text/html" width="1280" height="720" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>

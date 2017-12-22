@@ -1,0 +1,184 @@
+
+<div id="footer">
+
+  {% if settings.show_footer_top %}
+  <div class="f_top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-ms-6 col-xs-12">
+          <div class="ftop_blk">
+            <a href="{{ settings.cta_1_link }}"><h5>{{ settings.cta_1_text }} <span class="fa fa-arrow-circle-right"></span></h5></a>
+            <span class="icon"><i class="fa fa-{{ settings.cta_1_icon }}"></i></span>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-ms-6 col-xs-12">
+          <div class="ftop_blk">
+            <a href="{{ settings.cta_2_link }}"><h5>{{ settings.cta_2_text }}<span class="fa fa-arrow-circle-right"></span></h5></a>
+            <span class="icon"><i class="fa fa-{{ settings.cta_2_icon }}"></i></span>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-ms-6 col-xs-12">
+          <div class="ftop_blk">
+            <a href="{{ settings.cta_3_link }}"><h5>{{ settings.cta_3_text }} <span class="fa fa-arrow-circle-right"></span></h5></a>
+            <span class="icon"><i class="fa fa-{{ settings.cta_3_icon }}"></i></span>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-ms-6 col-xs-12">
+          <div class="ftop_blk bor_none">
+            <a href="{{ settings.cta_4_link }}"><h5>{{ settings.cta_4_text }} <span class="fa fa-arrow-circle-right"></span></h5></a>
+            <span class="icon"><i class="fa fa-{{ settings.cta_4_icon }}"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="f_mid">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <a href="javascript:void(rewardsmgr_open());"><img src="{{ 'rewards-logo-white.png' | asset_url }}" alt="Sons of Gotham Rewards" class="" style="display: block; width: 300px; margin: 0 auto 40px;"></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="loop-wrapper">
+            <h3 class="loop__heading">Free Shipping + Free Returns</h3>
+            <h4 class="loop__subheading">No Minimum &bull; No Code &bull; 24/7</h4>
+            <div class="mountain"></div>
+            <div class="hill"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="rock"></div>
+            <div class="truck"></div>
+            <div class="wheels"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-sm-8">
+          <div class="row">
+            <div class="col-sm-4">
+              <h4>{{ settings.footer_1_heading }}</h4>
+              {% if settings.footer_linklist_1 != '' %}
+                <ul>
+                  {% for link in linklists[settings.footer_linklist_1].links %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <div class="desc">
+                  {{ settings.footer_1_text }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-sm-4">
+              <h4>{{ settings.footer_2_heading }}</h4>
+              {% if settings.footer_linklist_2 != '' %}
+                <ul>
+                  {% for link in linklists[settings.footer_linklist_2].links %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <div class="desc">
+                  {{ settings.footer_2_text }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-sm-4">
+              <h4>{{ settings.footer_3_heading }}</h4>
+              {% if settings.footer_linklist_3 != '' %}
+                <ul>
+                  {% for link in linklists[settings.footer_linklist_3].links %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <div class="desc">
+                  {{ settings.footer_3_text }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <h4>{{ settings.footer_4_heading }}</h4>
+          <div class="desc">
+            {{ settings.footer_4_text }}
+          </div>
+          {% if settings.footer_display_newsletter %}
+            {% include 'newsletter-form' %}
+          {% endif %}
+          {% if settings.footer_display_social %}
+            {% include 'social-profiles' %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f_bot">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 footer__badges">
+          <span class="bbb-seal footer__badges__item"><a href="https://www.bbb.org/detroit/business-reviews/t-shirts/sons-of-gotham-in-farmington-hills-mi-90027612" target="_blank" title="Sons of Gotham BBB"><img src="{{ 'bbb-seal@2x.png' | asset_url }}" alt="Sons of Gotham BBB" width="120" height="45"></a></span>
+          <span id="y-badges" class="yotpo yotpo-badge badge-init footer__badges__item"></span>
+          <span id="gcr-container" class="footer-badge footer__badges__item"><g:ratingbadge merchant_id=8577606></g:ratingbadge></span>
+          <span id="gts-container" class="footer-badge footer__badges__item"></span>
+        </div>
+        <div class="col-sm-12 footer__payments">
+          {% if settings.show_payment_methods and shop.enabled_payment_types != empty %}
+            <ul class="list-inline payment-icons">
+              {% for type in shop.enabled_payment_types %}
+                {% capture payment_type_img %}cc-{{type}}@2x.png{% endcapture %}
+                <li class="payment-{{type}}"><img src="{{ payment_type_img | asset_url }}" alt="{{ type | replace: '_', ' ' }}" width="48" height="34"></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="col-sm-12 footer__credits">
+          <p class="copyright text-center"><small>Copyright &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }}</small></p>
+        </div>
+
+{% comment %}
+        <div class="col-sm-3">
+          <p class="copyright"><small>&copy;{{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }}</small></p>
+        </div>
+        <div class="col-sm-6">
+          {% if settings.show_payment_methods and shop.enabled_payment_types != empty %}
+            <ul class="list-inline payment-icons">
+              {% for type in shop.enabled_payment_types %}
+                {% capture payment_type_img %}cc-{{type}}@2x.png{% endcapture %}
+                <li class="payment-{{type}}"><img src="{{ payment_type_img | asset_url }}" alt="{{ type | replace: '_', ' ' }}" width="48" height="34"></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="col-sm-3">
+          <span class="bbb-seal"><a href="https://www.bbb.org/detroit/business-reviews/t-shirts/sons-of-gotham-in-farmington-hills-mi-90027612" target="_blank" title="Sons of Gotham BBB"><img src="{{ 'bbb-seal@2x.png' | asset_url }}" alt="Sons of Gotham BBB" width="120" height="45"></a></span>
+          <span id="y-badges" class="yotpo yotpo-badge badge-init"></span>
+          <span id="gts-container"></span>
+        </div>
+{% endcomment %}
+
+      </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div id="plugdetroit" style="text-align:right;">
+          <a href="http://plugdetroit.com/" target="_blank">
+            <img src="{{ 'powered-by-plug_2x.png' | asset_url }}" alt="Powered by Plug Detroit" height="46">
+          </a>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
