@@ -329,7 +329,7 @@ h1 {
 }
 
 h2, .h2, h2.title {
-  @include headline-style(floor($font-size-header*0.9));
+  @include headline-style(floor($font-size-header*0.8));
   margin-bottom: 0.75em;
   a {
     font-weight: inherit;
@@ -347,7 +347,7 @@ h2, .h2, h2.title {
 }
 
 h3, .h3 {
-  @include headline-style(floor($font-size-header*0.8));
+  @include headline-style(floor($font-size-header*0.7));
   margin: 0 auto 15px 0;
   a, a:visited {
     font-weight: inherit;
@@ -372,7 +372,7 @@ h3, .h3 {
 }
 
 h4, .h4 {
-  @include headline-style(floor($font-size-header*0.7));
+  @include headline-style(floor($font-size-header*0.6));
   margin: 0 0 0.5em 0;
   padding: 7px 0;
   a {
@@ -386,7 +386,7 @@ h4, .h4 {
 }
 
 h5, .h5 {
-  @include headline-style(floor($font-size-header*0.65));
+  @include headline-style(floor($font-size-header*0.5));
   margin: 0 0 0.5em 0;
   padding: 7px 0;
   a {
@@ -402,7 +402,7 @@ h5, .h5 {
 }
 
 h6, .h6 {
-  @include headline-style(floor($font-size-header*0.6));
+  @include headline-style(floor($font-size-header*0.4));
   letter-spacing: {{ settings.headline_letter_spacing | divided_by: 2 }}px;
   margin: 0 0 0.5em 0;
   padding: 7px 0;
@@ -5266,7 +5266,6 @@ $swatch-label-size: 34px;
 
 .footer {
   font-size: {{ settings.footer_font_size }}px;
-  padding: 20px 0;
   border-top: solid 1px {{ settings.sub_footer_border_color }};
   background-color: {{ settings.sub_footer_color }};
   background-position: center center;

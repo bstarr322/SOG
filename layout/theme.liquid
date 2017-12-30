@@ -17,6 +17,7 @@
 
     <!-- Stylesheets for Turbo 2.2.2 -->
     {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'custom.scss.css' | asset_url | stylesheet_tag }}
 
     <script>
       /*! lazysizes - v3.0.0 */
@@ -111,7 +112,7 @@
       {{ content_for_layout }}
     </div>
 
-    {% unless template contains 'index' or settings.secondary_newsletter_banner == false %}
+    {% unless settings.secondary_newsletter_banner == false %}
       {% section 'newsletter' %}
     {% endunless %}
 
@@ -174,6 +175,13 @@
     <script>
       {{ settings.custom_scripts }}
     </script>
+
+    <!--Start of Yotpo Script-->
+    <script type="text/javascript">
+    (function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/56NuY58oyXVeRkHbgfHJewxicjRxyOjeesNM85ye/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+    </script>
+    <!--End of Yotpo Script-->
+
   </body>
 </html>
 {% endcapture %}

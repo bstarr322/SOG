@@ -5,7 +5,27 @@
 {% endcomment %}
 
 <footer class="footer">
-  <div class="container footer-menu-wrap">
+  <div class="f_mid">
+    <div class="container footer-menu-wrap">
+      <div class="sixteen columns">
+        <a href="javascript:void(rewardsmgr_open());"><img src="{{ 'rewards-logo-white.png' | asset_url }}" alt="Sons of Gotham Rewards" class="" style="display: block; width: 300px; margin: 0 auto 40px;"></a>
+      </div>
+
+      <div class="sixteen columns">
+        <div class="loop-wrapper">
+          <h3 class="loop__heading">Free Shipping + Free Returns</h3>
+          <h4 class="loop__subheading">No Minimum &bull; No Code &bull; 24/7</h4>
+          <div class="mountain"></div>
+          <div class="hill"></div>
+          <div class="tree"></div>
+          <div class="tree"></div>
+          <div class="tree"></div>
+          <div class="rock"></div>
+          <div class="truck"></div>
+          <div class="wheels"></div>
+        </div>
+      </div>
+
       {% for block in section.blocks %}
         <div class="{% if forloop.length >= 5 %}three columns{% elsif forloop.length == 4 %}four columns{% elsif forloop.length == 3 %}one-third column{% elsif forloop.length == 2 %}eight columns{% endif %}" {{ block.shopify_attributes }}>
           {% if block.type == 'logo' %}
@@ -98,25 +118,42 @@
           </div>
         {% endif %}
       {% endfor %}
+    </div>
+  </div>
 
-      <div class="sixteen columns row footer_credits">
-        <p class="credits">
-          &copy; {{ "now" | date: "%Y" }} {{ shop.name | link_to: '/' }}.
-          {{ section.settings.copyright_text }}
-          {% if section.settings.display_designed_by %}
-            {{ 'layout.general.designer_credits_html' | t }}
+  <div class="f_bot">
+    <div class="container">
+      <div class="row">
+        <div class="sixteen columns footer__badges">
+          <span class="bbb-seal footer__badges__item"><a href="https://www.bbb.org/detroit/business-reviews/t-shirts/sons-of-gotham-in-farmington-hills-mi-90027612" target="_blank" title="Sons of Gotham BBB"><img src="{{ 'bbb-seal@2x.png' | asset_url }}" alt="Sons of Gotham BBB" width="120" height="45"></a></span>
+          <span id="y-badges" class="yotpo yotpo-badge badge-init footer__badges__item"></span>
+          <span id="gcr-container" class="footer-badge footer__badges__item"><g:ratingbadge merchant_id=8577606></g:ratingbadge></span>
+          <span id="gts-container" class="footer-badge footer__badges__item"></span>
+        </div>
+        <div class="sixteen columns footer__payments">
+          {% if section.settings.display_payment_methods and shop.enabled_payment_types != empty %}
+            <ul class="list-inline payment-icons">
+              {% for type in shop.enabled_payment_types %}
+                {% capture payment_type_img %}cc-{{type}}@2x.png{% endcapture %}
+                <li class="payment-{{type}}"><img src="{{ payment_type_img | asset_url }}" alt="{{ type | replace: '_', ' ' }}" width="48" height="34"></li>
+              {% endfor %}
+            </ul>
           {% endif %}
-          {{ powered_by_link | split: '" ' | join: '?ref=out-of-the-sandbox" ' | split: '">' | join: '?ref=out-of-the-sandbox">' }}
-        </p>
+        </div>
+        <div class="sixteen columns footer__credits">
+          <p class="copyright text-center"><small>Copyright &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }}</small></p>
+        </div>
+      </div>
 
-        {% if section.settings.display_payment_methods %}
-          <div class="payment_methods">
-            {% for type in shop.enabled_payment_types %}
-              <img src="{{ type | payment_type_img_url }}" alt="{{ type | replace: "_", " " | capitalize }}" />
-            {% endfor %}
+      <div class="row">
+        <div class="sixteen columns">
+          <div id="plugdetroit" style="text-align:right;">
+            <a href="http://plugdetroit.com/" target="_blank">
+              <img src="{{ 'powered-by-plug_2x.png' | asset_url }}" alt="Powered by Plug Detroit" height="46">
+            </a>
           </div>
-        {% endif %}
-      </div><!--end footer_credits-->
+        </div>
+      </div>
     </div>
   </div>
 </footer>
