@@ -7,6 +7,7 @@ Description: Shopify Theme (https://www.shopify.com/?ref=out-of-the-sandbox)
 /* Table of Contents
 ==================================================
   #Mixins
+  #Variables
   #Functions
   #Reset
   #Basic Styles
@@ -162,6 +163,11 @@ $xlarge: 1400px;
   -ms-word-break: break-word;
   word-break: break-word;
 }
+
+
+/* #Variables
+================================================== */
+$gutter: 30px;
 
 /* #Functions
 ================================================== */
@@ -3149,7 +3155,12 @@ input[type="button"].get-rates.action_button {
 
 .product_section .product_form,
 .product_section .contact-form {
-  max-width: 400px;
+  // max-width: 400px;
+  padding-top: $gutter/2;
+  border-color: {{ settings.headline_border_color }};
+  border-top-width: $borderWidth;
+  border-top-style: $borderStyle;
+
   @include respond-to('medium'){
     max-width: 100%;
   }

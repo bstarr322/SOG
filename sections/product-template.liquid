@@ -83,9 +83,14 @@
           {% endif %}
 
            {% if section.settings.display_vendor %}
-            <p class="vendor">
-              <span itemprop="brand" class="vendor">{{ product.vendor | link_to_vendor }}</span>
-            </p>
+             {% assign vendor_handle = product.vendor | handleize %}
+            {% assign vendor_url = collections[vendor_handle].url %}
+            {% capture vendor_logo %}vendor-{{ vendor_handle }}.png{% endcapture %}
+            <a href="{% if vendor_url != blank %}{{ vendor_url }}{% else %}/collections/vendors?q={{ vendor_handle | escape }}{% endif %}"
+               data-toggle="tooltip" data-placement="left"
+               title="View all {{ product.vendor }} products"
+               class="vendor product-single__vendor-logo"
+               style="background-image: url({{ vendor_logo | asset_url }});">{{ product.vendor }}</a>
           {% endif %}
 
           {% if variant.sku != blank and section.settings.display_sku %}
@@ -160,6 +165,31 @@
           {% unless collection_handles contains 'coming-soon' %}
             {% include 'product-form' with 'product' %}
           {% endunless %}
+
+
+          <div class="product-features">
+            <a href="javascript:void(rewardsmgr_open());" id="rewards-logo" class="link_rewards-logo">
+              <img src="{{ 'rewards-logo-sm.png' | asset_url }}" alt="Sons of Gotham Rewards">
+            </a>
+            <a id="modal-size-chart-toggle" href="#modal-size-chart" class="link_size-chart-toggle" style="display:none;">
+              <img src="{{ 'size-chart-icon.png' | asset_url }}" alt="" width="24" height="24">
+              Size Chart
+            </a>
+            <a href="/products/sons-of-gotham-gift-card" class="link_gift-card">
+              <i class="fa fa-gift fa-fw fa-lg"></i>
+              Gift Cards Available
+            </a>
+          </div>
+
+          <div class="free-shipping-popup-container">
+            <a id="modal-free-shipping-toggle" href="#modal-free-shipping" class="free-shipping-popup-toggle">
+              <img src="{{ 'free_shipping_icon.png' | asset_url }}" height="40">
+              <div>
+                <strong>FREE SHIPPING, FREE RETURNS.</strong>
+                <small>View Our Return Policy</small>
+              </div>
+            </a>
+          </div>
 
           {% if section.settings.product_description_position == "bottom" %}
             {% if product.description != blank %}

@@ -127,6 +127,8 @@
     {% if settings.quick_shop_enabled %}
       {% include 'popup-quick-shop' %}
     {% endif %}
+
+    
     {% if settings.disqus_enabled %}
       {% if template contains "blog" or template contains "article" or template contains "index" %}
         <script id="dsq-count-scr" src="//{{ settings.disqus_shortname }}.disqus.com/count.js" async></script>
@@ -134,6 +136,10 @@
     {% endif %}
 
     <script src="{{ 'app.js' | asset_url }}"></script>
+    
+    {% include 'size-charts' %}
+    {% include 'free-shipping' %}
+
     {% if settings.show_multiple_currencies %}
       {% include 'currencies' %}
     {% endif %}
