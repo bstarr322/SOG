@@ -39,7 +39,7 @@
               <span class="shopify-product-reviews-badge" data-id="{{ qvp.id }}"></span>
             </div>
           {% endif %}
-          <p class="product-info-price mb20 mt10"><span id="productPrice" itemprop="price" class="money">{{ qvp.selected_or_first_available_variant.price | money }}</span></p>
+          <p class="product-info-price mb20 mt10"><span id="productPrice" class="money">{{ qvp.selected_or_first_available_variant.price | money }}</span></p>
           <p class="text-smaller text-muted">{{ qvp.description | strip_html | truncate: 350 }}</p>
 
           {% if showQuickViewForm %}
