@@ -293,6 +293,22 @@
 
     {% endif %}
 
+    <script type="text/javascript">
+      let current_sku = '{{ product.variants[0].sku }}';
+      let style_code = current_sku.split('-')[0];
+      let body_code = current_sku.split('-')[1];
+      let size_code = current_sku.split('-')[2];
+console.log('{{ collections['all'].all_products_count }}');
+      {% for product in collections['all'].products limit: 1000 %}
+        console.log('{{ product.handle }}');
+        console.log(style_code)
+        {% if product.variants[0].sku contains style_code %}
+          // console.log('{{product | json }}');
+          console.log('{{ product.handle }}');
+        {% endif %}
+      {% endfor %}
+    </script>
+
 {% schema %}
 
 {
