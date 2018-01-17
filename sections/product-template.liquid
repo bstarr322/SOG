@@ -154,6 +154,12 @@
             {% include 'product-notify-me' %}
           {% endif %}
 
+          <div class="select-bodystyle">
+            <span class="option_title">Select Available Body Style:</span>
+            <select>
+            </select>
+          </div>
+
           {% if section.settings.product_description_position == "top" %}
             {% if product.description != blank %}
              <div class="description" itemprop="description">
@@ -294,19 +300,27 @@
     {% endif %}
 
     <script type="text/javascript">
-      let current_sku = '{{ product.variants[0].sku }}';
-      let style_code = current_sku.split('-')[0];
-      let body_code = current_sku.split('-')[1];
-      let size_code = current_sku.split('-')[2];
-console.log('{{ collections['all'].all_products_count }}');
-      {% for product in collections['all'].products limit: 1000 %}
-        console.log('{{ product.handle }}');
-        console.log(style_code)
-        {% if product.variants[0].sku contains style_code %}
-          // console.log('{{product | json }}');
-          console.log('{{ product.handle }}');
-        {% endif %}
-      {% endfor %}
+      window.testProducts = {{ collections.test-collection-for-3-0.products | json }};
+      window.jsonProduct = {{ product | json }};
+
+      let currentSku = '{{ product.variants[0].sku }}';
+      let styleCode = currentSku.split('-')[0];
+      let bodyCode = currentSku.split('-')[1];
+      let sizeCode = currentSku.split('-')[2];
+
+      // $.ajax({
+      //   url: 'https://jcruzapp.herokuapp.com/sonsofgotham',
+      //   method:'POST',
+      //   data: {
+      //     product_id: "{{ product.id }}",
+      //     style_code: style_code,
+      //     body_code: body_code
+      //   },
+      //   success: function(result) {
+          
+      //   }
+      // });
+
     </script>
 
 {% schema %}
