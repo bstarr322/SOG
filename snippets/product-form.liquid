@@ -1,6 +1,6 @@
 {% if product.available %}
   {% assign variant = product.selected_or_first_available_variant %}
-
+<div class="product-form">
   <form action="/cart/add"
         method="post"
         class="clearfix product_form init {% if product.variants.size > 1 or product.options.size > 1 %}product_form_options{% endif %}"
@@ -85,4 +85,5 @@
       </button>
     </div>
   </form>
+</div>
 {% endif %}

@@ -3,6 +3,34 @@
 - Product template
 {% endcomment %}
 
+<script type="text/javascript">
+  var productSettings = productSettings || {};
+  productSettings.gallery_arrows = '{{section.settings.gallery_arrows}}';
+  productSettings.product_thumbs = '{{section.settings.product_thumbs}}';
+  productSettings.thumbnail_position = '{{section.settings.thumbnail_position}}';
+
+  productSettings.slideshow_animation = '{{section.settings.slideshow_animation}}';
+  productSettings.slideshow_button_style = '{{settings.slideshow_button_style}}';
+  productSettings.product_thumbs = '{{section.settings.product_thumbs}}';
+  productSettings.enable_product_lightbox = '{{section.settings.enable_product_lightbox}}';
+  productSettings.activate_autoplay = '{{section.settings.activate_autoplay}}';
+  productSettings.activate_zoom = '{{section.settings.activate_zoom}}';
+  productSettings.image_loading_style = '{{ settings.image_loading_style }}';
+
+  productSettings.money_format = '{{ shop.money_format }}';
+  productSettings.currency = '{{ shop.currency }}';
+  productSettings.section_id = '{{ section.id }}';
+  productSettings.block_id = '{{ block.id }}';
+
+  productSettings.product_form_style = '{{ settings.product_form_style }}';
+
+  productSettings.display_product_quantity = '{{ settings.display_product_quantity }}';
+  productSettings.display_inventory_left = '{{ settings.display_inventory_left }}';
+  productSettings.limit_quantity = '{{ settings.limit_quantity }}';
+  productSettings.cart_action = '{{ settings.cart_action }}';
+  productSettings.btn_text_color = '{{ settings.btn_text_color }}';
+</script>
+
 <a name="pagecontent" id="pagecontent"></a>
 
 <div class="container main content">

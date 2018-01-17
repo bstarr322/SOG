@@ -1090,7 +1090,7 @@ var productPage = {
         $('.product_section .product_name').text(product.title);
         $('.product_section .description').html(product.description);
 
-        // productPage.updatePopfunkProductImages(product);
+        productPage.updatePopfunkProductImages(product);
       });
     }
   },
@@ -1165,33 +1165,120 @@ var productPage = {
     
 
     /*----------  Product Thumbnails  ----------*/
-    // if (productSettings.product_thumbs && product.images.length > 1) {
-    //   template += '<div class="product_gallery_nav product-' + product.id + '-gallery-nav">';
-    //   for (var i = 0; i < product.images.length; i++) {
+    if (productSettings.product_thumbs && product.images.length > 1) {
+      template += '<div class="product_gallery_nav product-' + product.id + '-gallery-nav">';
+      for (var i = 0; i < product.images.length; i++) {
 
-    //     template += '<div class="gallery-cell" data-title="" >';
+        template += '<div class="gallery-cell" data-title="" >';
         
-    //       // @Todo: data-image-id,
-    //       var image_id = product.id + '-' + i;
+          // @Todo: data-image-id,
+          var image_id = product.id + '-' + i;
 
-    //       template += '<img src="'
-    //        + image_400x
-    //        + '" class="lazyload '
-    //        + productSettings.image_loading_style
-    //        + '" data-index="' + i
-    //        + '" data-image-id="' + image_id
-    //        + '" data-featured-image="'
-    //        + '" alt="Product Thumb Image Alt" />';
+          template += '<img src="'
+           + image_400x
+           + '" class="lazyload '
+           + productSettings.image_loading_style
+           + '" data-index="' + i
+           + '" data-image-id="' + image_id
+           + '" data-featured-image="'
+           + '" alt="Product Thumb Image Alt" />';
 
-    //     template += '</div>';
-    //   }
+        template += '</div>';
+      }
 
-    //   template += '</div>';
-    // }
+      template += '</div>';
+    }
     /*----------  End - Product Thumbnails  ----------*/
-
-    
     $('.product_section .gallery-wrap').html(template);
+    
+    /*----------  Product Form  ----------*/
+    var template = '';
+    if (product.available) {
+      var product_form_options = product.options.length > 1 ? ' product_form_options ' : '';
+      var product_form = 'product';
+      var variant = product.variants[0];
+
+      template += '<form action="/cart/add" method="post" '
+       + 'class="clearfix product_form init ' + product_form_options
+       + '" id="product-form-' + product.id
+       + '" data-money-format="' + productSettings.money_format
+       + '" data-shop-currency="' + productSettings.currency
+       + '" data-select-id="product-select-' + product.id + product_form + productSettings.section_id + productSettings.block_id
+       + '" data-enable-state="true"'
+       + ' data-product="' + product
+       + '" data-product-id="' + product.id
+       +'">';
+
+        if ( product.options.length > 1 ) {
+          template += '<div class="select">';
+            template += '<select id="product-select-' + product.id + product_form + productSettings.section_id + productSettings.block_id
+              + '" name="id" class="multi_select">';
+              for( v in product.variants) {
+                template += '<option value="' + v.id + '" data-sku="' + v.sku + '" >' + v.title + '</option>';
+              }
+            template += '</select>';    
+          template += '</div>';
+        } else if ( product.options.length == 1 && product.options.length > 1 || product.options.length == 1 && product.options[0] != 'Title') {
+          template += '<div class="select">';
+            template += '<label>' + product.options[0] + '</label>';
+            template += '<select id="product-select-' + product.id + product_form + productSettings.section_id + productSettings.block_id
+              + '" name="id">';
+              for( v in product.variants) {
+                template += '<option value="' + v.id + '" data-sku="' + v.sku + '" >' + v.title + '</option>';
+              }
+            template += '</select>';    
+          template += '</div>';
+        } else {
+          template += '<input type="hidden" name="id" value="' + variant.id + '" />';
+        }
+
+        if (productSettings.product_form_style == 'swatches' && product.variants.length > 1 || productSettings.product_form_style == 'swatches' && product.options[0] != 'Title') {
+          template += '<div class="swatch_options">';
+
+          template += '</div>';
+        }
+
+        if (productSettings.display_inventory_left) {
+          template += '<div class="items_left">';
+            if (variant.inventory_management != null && variant.inventory_quantity > 0) {
+              let items_left_text = variant.inventory_quantity == 1 ? ' item left' : ' items left';
+              template += '<p><em>' + variant.inventory_quantity + items_left_text + '</em></p>';
+            }
+          template += '</div>';
+        }
+
+        if (productSettings.display_product_quantity) {
+          let max = productSettings.limit_quantity && variant.inventory_management != null && variant.inventory_policy == 'deny' ? 'max="' + variant.inventory_quantity + '"' : '';
+          
+          template += '<div class="left product-quantity-box">';
+          template += '<label for="quantity">Qty</label>';
+          template += '<span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>';
+          template += '<input type="number" min="1" size="2" class="quantity" name="quantity" id="quantity" value="1" ' + max + ' />';
+          template += '<span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>';
+          template += '</div>';
+        }
+
+        let inline_purchase = productSettings.display_product_quantity ? 'inline_purchase' : '';
+        template += '<div class="purchase clearfix ' + inline_purchase + '">';
+        
+        if (productSettings.cart_action == 'reload_page') {
+          template += '<input type="hidden" name="return_to" value="back" />';
+        } else {
+          template += '<input type="hidden" name="return_to" value="/checkout" />';
+        }
+
+        let add_to_cart_label = 'Add to Cart';
+        template += '<button type="submit" name="add" class="action_button add_to_cart" data-label="' + add_to_cart_label + '"><span class="text">' + add_to_cart_label +'</span>';
+        template += '<svg x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" class="checkmark">';
+          template +='<path fill="none" stroke="' + productSettings.btn_text_color + '" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"/>';
+        template += '</svg></button>';
+
+      template += '</form>';
+
+    }
+    /*----------  End - Product Form  ----------*/
+
+    $('.product_section .product-form').html(template);
     
     productPage.init();
 
