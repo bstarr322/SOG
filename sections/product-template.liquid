@@ -84,7 +84,7 @@
       <div class="sixteen columns">
     {% endif %}
 
-    <div  class="product-{{ product.id }}"
+    <div  class="product-container product-{{ product.id }}"
           data-free-text="{{ settings.free_price_text }}"
           >
       <div class="section product_section clearfix js-product_section {% if section.settings.product_images_position == 'right' %}align_right--images{% endif %}" itemscope itemtype="http://schema.org/Product" data-rv-handle="{{ product.handle }}">
