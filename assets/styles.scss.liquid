@@ -2743,6 +2743,70 @@ ul.tabs:after {
 ul.tabs {
     zoom: 1; }
 
+/* Person Type Tabs
+================================================== */
+.person-type {
+  .products {overflow: hidden;}
+
+  .each {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    padding: 0 2px;
+    /*width: 25%;*/
+    /*float: left;*/
+
+    .image-wrapper {
+      width: 100%;
+      height: 160px;
+
+      img {
+        max-height: 100%;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .each.active {
+    .image-wrapper {
+      border: solid 3px #03a196;
+      border-radius: 5px;
+    }
+  }
+
+  .person {
+    position: relative;
+
+    .prev-arrow, .next-arrow {
+      width: 14px;
+      height: 14px;
+      border: solid 3px gray;
+      border-width: 3px 3px 0 0;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .prev-arrow {
+      left: 15px;
+      transform: rotate(-135deg);
+    }
+
+    .next-arrow {
+      right: 15px;
+      transform: rotate(45deg);
+    }
+
+    .slick-track {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
 /* #Forms
 ================================================== */
 form {
